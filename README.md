@@ -2,6 +2,8 @@
 
 A simple, elegant QR code generator built with vanilla HTML, CSS, and JavaScript. Enter any URL and instantly create customizable QR codes with size and color options.
 
+**Live Demo:** https://pedrosanzmtz.github.io/qr-code-generator/
+
 ## Features
 
 - **Instant QR Generation** - Generate QR codes from any valid URL
