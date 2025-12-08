@@ -8,6 +8,8 @@ const downloadJpeg = document.getElementById('downloadJpeg');
 const downloadSvg = document.getElementById('downloadSvg');
 const sizeSelect = document.getElementById('sizeSelect');
 const colorSelect = document.getElementById('colorSelect');
+const colorPickerContainer = document.getElementById('colorPickerContainer');
+const customColorInput = document.getElementById('customColorInput');
 const errorMsg = document.getElementById('errorMsg');
 
 let qrcode = null;
@@ -39,7 +41,11 @@ function generateQRCode() {
     errorMsg.classList.remove('active');
 
     const size = parseInt(sizeSelect.value);
-    const color = colorSelect.value;
+    let color = colorSelect.value;
+
+    if (color === 'custom') {
+        color = customColorInput.value;
+    }
 
     // Clear previous QR code
     qrcodeDiv.innerHTML = '';
@@ -72,7 +78,10 @@ function downloadAs(format) {
         link.href = canvas.toDataURL('image/jpeg', 0.9);
     } else if (format === 'svg') {
         const size = parseInt(sizeSelect.value);
-        const color = colorSelect.value;
+        let color = colorSelect.value;
+        if (color === 'custom') {
+            color = customColorInput.value;
+        }
         const svg = canvasToSvg(canvas, size, color);
         const blob = new Blob([svg], { type: 'image/svg+xml' });
         link.download = 'qrcode.svg';
@@ -129,5 +138,14 @@ urlInput.addEventListener('blur', () => {
     const value = urlInput.value.trim();
     if (value && !value.match(/^https?:\/\//i)) {
         urlInput.value = 'https://' + value;
+    }
+});
+
+// Show/hide color picker
+colorSelect.addEventListener('change', () => {
+    if (colorSelect.value === 'custom') {
+        colorPickerContainer.style.display = 'flex';
+    } else {
+        colorPickerContainer.style.display = 'none';
     }
 });

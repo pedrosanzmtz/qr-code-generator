@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Documented support for multiple download formats: PNG, JPEG, and SVG.
+- Added "Advanced" custom color option with color picker.
 - Updated README to reflect the new version and expanded download options.
 
 ## [1.0.0] - 2025-12-05

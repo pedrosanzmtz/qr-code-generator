@@ -130,20 +130,45 @@ input[type="url"]::placeholder {
     word-break: break-all;
 }
 
+.customization-section {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.customization-section h3 {
+    font-size: 1.1rem;
+    color: #1a1a2e;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
 .options {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.option-group {
+    flex: 1;
+}
+
+.option-group label {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 6px;
 }
 
 .options select {
-    flex: 1;
+    width: 100%;
     padding: 10px 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 0.9rem;
     background: white;
     cursor: pointer;
+    transition: border-color 0.2s;
 }
 
 .options select:focus {
@@ -184,4 +209,27 @@ input[type="url"]::placeholder {
     width: auto;
     padding: 10px 20px;
     margin-top: 0;
+}
+
+.color-picker-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.color-picker-container label {
+    margin-bottom: 0;
+}
+
+.color-picker-container input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    background: none;
 }

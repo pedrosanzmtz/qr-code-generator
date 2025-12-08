@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <h1>🔲 QR Code Generator</h1>
@@ -14,29 +16,39 @@
 
         <div class="input-group">
             <label for="urlInput">Enter URL</label>
-            <input
-                type="url"
-                id="urlInput"
-                placeholder="https://example.com"
-                autocomplete="off"
-            >
+            <input type="url" id="urlInput" placeholder="https://example.com" autocomplete="off">
             <p class="error-message" id="errorMsg">Please enter a valid URL</p>
         </div>
 
-        <div class="options">
-            <select id="sizeSelect">
-                <option value="128">Small (128px)</option>
-                <option value="200" selected>Medium (200px)</option>
-                <option value="300">Large (300px)</option>
-            </select>
-            <select id="colorSelect">
-                <option value="#000000">Black</option>
-                <option value="#0f3460">Navy</option>
-                <option value="#2c3e50">Dark Gray</option>
-                <option value="#8e44ad">Purple</option>
-                <option value="#c0392b">Red</option>
-                <option value="#27ae60">Green</option>
-            </select>
+        <div class="customization-section">
+            <h3>Customize</h3>
+            <div class="options">
+                <div class="option-group">
+                    <label for="sizeSelect">Size</label>
+                    <select id="sizeSelect">
+                        <option value="128">Small (128px)</option>
+                        <option value="200" selected>Medium (200px)</option>
+                        <option value="300">Large (300px)</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="colorSelect">Color</label>
+                    <select id="colorSelect">
+                        <option value="#000000">Black</option>
+                        <option value="#0f3460">Navy</option>
+                        <option value="#2c3e50">Dark Gray</option>
+                        <option value="#8e44ad">Purple</option>
+                        <option value="#c0392b">Red</option>
+                        <option value="#27ae60">Green</option>
+                        <option value="custom">Custom Color</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="color-picker-container" id="colorPickerContainer" style="display: none;">
+                <label for="customColorInput">Select Color:</label>
+                <input type="color" id="customColorInput" value="#000000">
+            </div>
         </div>
 
         <button class="btn btn-primary" id="generateBtn">Generate QR Code</button>
@@ -57,4 +69,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

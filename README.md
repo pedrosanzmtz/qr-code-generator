@@ -8,7 +8,7 @@ A simple, elegant QR code generator built with vanilla HTML, CSS, and JavaScript
 
 - **Instant QR Generation** - Generate QR codes from any valid URL
 - **Customizable Size** - Choose from Small (128px), Medium (200px), or Large (300px)
-- **Color Options** - Select from 6 color presets: Black, Navy, Dark Gray, Purple, Red, Green
+- **Color Options** - Select from 6 color presets or choose a **Custom Color** using the picker
 - **Multiple Formats** - Download as PNG, JPEG, or SVG
 - **URL Validation** - Automatic validation with helpful error messages
 - **Auto HTTPS** - Automatically adds `https://` prefix when missing
