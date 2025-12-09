@@ -149,3 +149,26 @@ colorSelect.addEventListener('change', () => {
         colorPickerContainer.style.display = 'none';
     }
 });
+
+// Dark Mode Logic
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+// Check local storage
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggle.textContent = '☀️';
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '☀️';
+    } else {
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '🌙';
+    }
+});
