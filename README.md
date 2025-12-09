@@ -6,8 +6,6 @@ A simple, elegant QR code generator built with vanilla HTML, CSS, and JavaScript
 
 ## Why This Project?
 
-## Why This Project?
-
 Most "free" QR code generators online are actually marketing funnels designed to force you into a subscription. They often bait you with a free code but then restrict it with limitations.
 
 | **Common Online Generators** ❌ | **This Project** ✅ |
