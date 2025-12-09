@@ -59,6 +59,7 @@ We are continuously improving this project to provide features that are usually 
 - [ ] **History**: Save generated QR codes to local storage so users don't lose them.
 - [x] **Dark Mode**: Add a toggle for dark/light theme (defaults to system preference).
 - [ ] **Offline Support**: Turn the site into a PWA (Progressive Web App) for offline use.
+- [ ] **Add midjourney support 
 
 ## Version
 
