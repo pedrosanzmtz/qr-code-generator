@@ -64,7 +64,7 @@ We are continuously improving this project to provide features that are usually 
 
 ## Version
 
-1.1.0
+1.2.0
 
 ## License
 
