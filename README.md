@@ -58,11 +58,11 @@ We are continuously improving this project to provide features that are usually 
 - [ ] **Logo Integration**: Allow users to upload a logo to place in the center of the QR code.
 - [ ] **History**: Save generated QR codes to local storage so users don't lose them.
 - [x] **Dark Mode**: Add a toggle for dark/light theme (defaults to system preference).
-- [ ] **Offline Support**: Turn the site into a PWA (Progressive Web App) for offline use.
+- [x] **Offline Support**: Turn the site into a PWA (Progressive Web App) for offline use.
 
 ## Version
 
-1.2.0
+1.3.0
 
 ## License
 
