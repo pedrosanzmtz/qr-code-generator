@@ -1,3 +1,5 @@
+// Cache version should be updated with each release to force cache invalidation
+// Update this to match the version in CHANGELOG.md when deploying changes
 const CACHE_NAME = 'qr-code-gen-v1.5.0';
 const ASSETS_TO_CACHE = [
   './',
@@ -10,6 +12,7 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+  console.log('[SW] Installing version:', CACHE_NAME);
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -21,20 +24,23 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  console.log('[SW] Activating version:', CACHE_NAME);
   event.waitUntil(
+    // Clean up old caches first, then claim clients
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          // Delete all caches that don't match the current version
-          if (cacheName !== CACHE_NAME) {
+        cacheNames
+          .filter(cacheName => cacheName !== CACHE_NAME)
+          .map((cacheName) => {
+            console.log('[SW] Deleted old cache:', cacheName);
             return caches.delete(cacheName);
-          }
-        })
+          })
       );
+    }).then(() => {
+      // Take control of all clients immediately after cache cleanup
+      return self.clients.claim();
     })
   );
-  // Take control of all clients immediately
-  return self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
