@@ -52,12 +52,13 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 20px;
+    padding-bottom: 0;
 }
 
 .main-wrapper {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -373,7 +374,7 @@ input[type="url"]::placeholder {
 /* Footer Styles */
 .footer {
     width: 100%;
-    padding: 20px;
+    padding: 16px 20px;
     margin-top: auto;
     text-align: center;
 }
@@ -385,31 +386,31 @@ input[type="url"]::placeholder {
 
 .footer-text {
     color: var(--text-primary);
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-    opacity: 0.8;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    opacity: 0.7;
 }
 
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .footer-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    border-radius: 8px;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 6px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .footer-link:hover {
@@ -430,21 +431,20 @@ input[type="url"]::placeholder {
 /* Responsive adjustments for mobile */
 @media (max-width: 480px) {
     .footer {
-        padding: 15px;
-        margin-top: 30px;
+        padding: 12px 15px;
     }
 
     .footer-text {
-        font-size: 0.85rem;
-        margin-bottom: 10px;
+        font-size: 0.75rem;
+        margin-bottom: 6px;
     }
 
     .footer-links {
-        gap: 12px;
+        gap: 10px;
     }
 
     .footer-link {
-        font-size: 0.85rem;
-        padding: 6px 12px;
+        font-size: 0.75rem;
+        padding: 5px 10px;
     }
 }
