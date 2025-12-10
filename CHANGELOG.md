@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Contributing**: Pull requests now must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X`
 - **GitHub Workflow**: Enabled Claude to create pull requests directly via GitHub Actions
 
+### Fixed
+- **PWA**: Fixed service worker cache not updating on new deployments
+    - Updated cache name to version-based format (`qr-code-gen-v1.5.0`)
+    - Added automatic cleanup of old caches on activation
+    - Added `skipWaiting()` to install event for immediate service worker updates
+    - Added `clients.claim()` to activation event to take control of clients immediately
+    - Users will now see updates without manually clearing browser data
+
 ## [1.5.0] - 2025-12-10
 
 ### Added
