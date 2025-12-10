@@ -55,7 +55,7 @@ This is a zero-dependency, static HTML application. Simply open the HTML file in
 
 ## Version
 
-1.3.0
+1.4.0
 
 ## License
 
