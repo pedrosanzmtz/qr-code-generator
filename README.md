@@ -64,7 +64,7 @@ This will help you understand the codebase and make changes that align with the 
 
 ## Version
 
-1.5.0
+1.5.1
 
 ## License
 
