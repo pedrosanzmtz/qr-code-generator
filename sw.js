@@ -1,6 +1,7 @@
-// Cache version should be updated with each release to force cache invalidation
-// Update this to match the version in CHANGELOG.md when deploying changes
-const CACHE_NAME = 'qr-code-gen-v1.5.0';
+// Dynamic cache versioning based on HTML metadata
+// The cache version is read from the app-version meta tag in index.html
+let CACHE_NAME = 'qr-code-gen-v1.5.0'; // Default fallback
+
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,24 +12,46 @@ const ASSETS_TO_CACHE = [
   'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'
 ];
 
+// Helper function to get version from HTML metadata
+async function getVersionFromHTML() {
+  try {
+    const response = await fetch('./index.html', { cache: 'no-cache' });
+    const html = await response.text();
+    const match = html.match(/<meta\s+name="app-version"\s+content="([^"]+)"/);
+    if (match && match[1]) {
+      return `qr-code-gen-v${match[1]}`;
+    }
+  } catch (error) {
+    console.error('[SW] Failed to fetch version from HTML:', error);
+  }
+  return CACHE_NAME; // Fallback to default
+}
+
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing version:', CACHE_NAME);
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
+    (async () => {
+      // Get dynamic version from HTML
+      CACHE_NAME = await getVersionFromHTML();
+      console.log('[SW] Installing version:', CACHE_NAME);
+
+      const cache = await caches.open(CACHE_NAME);
+      await cache.addAll(ASSETS_TO_CACHE);
+    })()
   );
   // Force the waiting service worker to become the active service worker
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating version:', CACHE_NAME);
   event.waitUntil(
-    // Clean up old caches first, then claim clients
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    (async () => {
+      // Get the current version again to ensure consistency
+      CACHE_NAME = await getVersionFromHTML();
+      console.log('[SW] Activating version:', CACHE_NAME);
+
+      // Clean up old caches
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames
           .filter(cacheName => cacheName !== CACHE_NAME)
           .map((cacheName) => {
@@ -36,18 +59,67 @@ self.addEventListener('activate', (event) => {
             return caches.delete(cacheName);
           })
       );
-    }).then(() => {
+
       // Take control of all clients immediately after cache cleanup
-      return self.clients.claim();
-    })
+      await self.clients.claim();
+    })()
   );
 });
 
 self.addEventListener('fetch', (event) => {
+  const { request } = event;
+
+  // Network-first strategy for navigation requests (HTML files)
+  // This ensures users always get the latest HTML with updated version metadata
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          // Clone the response and cache it
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, responseToCache);
+          });
+          return response;
+        })
+        .catch(error => {
+          console.error('[SW] Network request failed, falling back to cache:', error);
+          // Fall back to cache if network fails
+          return caches.match(request)
+            .then(cachedResponse => {
+              if (cachedResponse) {
+                return cachedResponse;
+              }
+              // If not in cache either, return a basic offline page response
+              console.error('[SW] No cached response available for:', request.url);
+              throw error;
+            });
+        })
+    );
+    return;
+  }
+
+  // Cache-first strategy for all other assets (CSS, JS, images, etc.)
   event.respondWith(
-    caches.match(event.request)
+    caches.match(request)
       .then((response) => {
-        return response || fetch(event.request);
+        if (response) {
+          return response;
+        }
+        // If not in cache, fetch from network
+        return fetch(request)
+          .then(networkResponse => {
+            // Cache the fetched resource for future use
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(request, responseToCache);
+            });
+            return networkResponse;
+          })
+          .catch(error => {
+            console.error('[SW] Fetch failed for:', request.url, error);
+            throw error;
+          });
       })
   );
 });
