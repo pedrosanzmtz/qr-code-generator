@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - **Contributing**: Pull requests now must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X`
+- **GitHub Workflow**: Enabled Claude to create pull requests directly via GitHub Actions
 
 ## [1.5.0] - 2025-12-10
 
