@@ -22,6 +22,21 @@ If you are using an AI agent to work on this repository:
 
 ## Pull Requests
 
-1.  Ensure your changes work by manually testing in a browser.
-2.  Update the `CHANGELOG.md` with a description of your changes.
-3.  Submit your PR!
+All pull requests must reference an issue. If an issue doesn't exist for your proposed change, please create one first.
+
+### PR Requirements
+
+1.  **Link to an Issue**: Your PR must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X` in the description.
+2.  **Manual Testing**: Ensure your changes work by testing in a browser (Chrome, Firefox, Safari if available).
+3.  **Update Documentation**: Update `CHANGELOG.md` with a description of your changes under the `[Unreleased]` section.
+4.  **Update README**: If your changes affect features or usage, update `README.md` accordingly.
+5.  **Follow the PR Template**: Complete all relevant sections of the PR template when creating your pull request.
+
+### Creating a Pull Request
+
+1.  Create or identify an existing issue that describes what you want to change
+2.  Fork the repository and create a new branch from `main`
+3.  Make your changes following the development guidelines above
+4.  Test thoroughly in multiple browsers
+5.  Update `CHANGELOG.md` and `README.md` if needed
+6.  Submit your PR using the PR template and ensure it references the issue
