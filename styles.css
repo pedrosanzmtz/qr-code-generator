@@ -51,6 +51,7 @@ body {
     background: linear-gradient(135deg, var(--bg-body-start) 0%, var(--bg-body-mid) 50%, var(--bg-body-end) 100%);
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -366,7 +367,7 @@ input[type="url"]::placeholder {
 .footer {
     width: 100%;
     padding: 20px;
-    margin-top: 40px;
+    margin-top: auto;
     text-align: center;
 }
 
@@ -408,6 +409,11 @@ input[type="url"]::placeholder {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     opacity: 1;
+}
+
+.footer-link:focus {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
 }
 
 .footer-link svg {
