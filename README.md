@@ -50,15 +50,7 @@ Most "free" QR code generators online are actually marketing funnels designed to
 
 This is a zero-dependency, static HTML application. Simply open the HTML file in a browser - no server, build tools, or installation needed.
 
-## 🚀 Future Roadmap
 
-We are continuously improving this project to provide features that are usually behind a paywall.
-
-- [ ] **More QR Types**: Support for Wi-Fi, vCard (Contacts), Email, and SMS.
-- [ ] **Logo Integration**: Allow users to upload a logo to place in the center of the QR code.
-- [ ] **History**: Save generated QR codes to local storage so users don't lose them.
-- [x] **Dark Mode**: Add a toggle for dark/light theme (defaults to system preference).
-- [x] **Offline Support**: Turn the site into a PWA (Progressive Web App) for offline use.
 
 ## Version
 
