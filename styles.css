@@ -95,6 +95,16 @@ h1 {
     color: var(--text-primary);
     margin-bottom: 10px;
     font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.header-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 .subtitle {
