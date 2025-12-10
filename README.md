@@ -51,7 +51,16 @@ Most "free" QR code generators online are actually marketing funnels designed to
 
 This is a zero-dependency, static HTML application. Simply open the HTML file in a browser - no server, build tools, or installation needed.
 
+## For AI Code Assistants
 
+If you're an AI assistant working on this project, please read [`AI_CONTEXT.md`](AI_CONTEXT.md) for comprehensive guidelines on:
+- Project structure and philosophy
+- Development workflow and best practices
+- Feature implementation patterns
+- Testing procedures
+- Common tasks and troubleshooting
+
+This will help you understand the codebase and make changes that align with the project's goals.
 
 ## Version
 
