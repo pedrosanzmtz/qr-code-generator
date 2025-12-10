@@ -304,3 +304,46 @@ input[type="url"]::placeholder {
     cursor: pointer;
     background: none;
 }
+
+/* Logo Upload Customization */
+.logo-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-controls input[type="file"] {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    min-width: 0; /* Prevents input from overflowing flex container */
+}
+
+/* Custom File Input Button */
+.logo-controls input[type="file"]::file-selector-button {
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.logo-controls input[type="file"]::file-selector-button:hover {
+    background-color: var(--btn-secondary-hover);
+}
+
+.dark-mode .logo-controls input[type="file"]::file-selector-button {
+    border-color: #34495e; /* Slightly darker border in dark mode */
+}
+
+/* Small Button Variant */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0; /* Override default btn margin */
+    width: auto;
+}

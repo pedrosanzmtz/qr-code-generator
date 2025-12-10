@@ -60,6 +60,13 @@
                         <option value="custom">Custom Color</option>
                     </select>
                 </div>
+                 <div class="option-group">
+                    <label for="logoInput">Logo (Optional)</label>
+                    <div class="logo-controls">
+                        <input type="file" id="logoInput" accept="image/png, image/jpeg, image/svg+xml">
+                        <button class="btn btn-secondary btn-sm" id="clearLogoBtn" style="display: none;">Clear</button>
+                    </div>
+                </div>
             </div>
 
             <div class="color-picker-container" id="colorPickerContainer" style="display: none;">
@@ -72,6 +79,7 @@
 
         <div class="qr-container" id="qrContainer">
             <div id="qrcode"></div>
+            <div id="qrcode-hidden" style="display: none;"></div>
             <p class="url-display" id="urlDisplay"></p>
             <div class="download-options">
                 <label>Download as:</label>

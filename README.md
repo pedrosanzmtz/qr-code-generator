@@ -26,6 +26,7 @@ Most "free" QR code generators online are actually marketing funnels designed to
 - **Instant QR Generation** - Generate QR codes from any valid URL
 - **Customizable Size** - Choose from Small (128px), Medium (200px), or Large (300px)
 - **Color Options** - Select from 6 color presets or choose a **Custom Color** using the picker
+- **Add Your Logo** - Upload a custom logo to be centered on the QR code.
 - **Multiple Formats** - Download as PNG, JPEG, or SVG
 - **URL Validation** - Automatic validation with helpful error messages
 - **Auto HTTPS** - Automatically adds `https://` prefix when missing
