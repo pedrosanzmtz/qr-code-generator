@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Internationalization**: Added Spanish (Latin America) language support
+  - Created translations.js with English and Spanish translations
+  - Added language toggle button in footer
+  - Language preference saved to localStorage
+  - Auto-detection of browser language on first visit
+  - Updated manifest.json with localized app names
 - **Footer**: Display application version in the footer.
 - **GitHub Workflow**: Created PR template (`.github/PULL_REQUEST_TEMPLATE.md`) requiring issue references
 - **Documentation**: Enhanced `CONTRIBUTING.md` with PR requirements and workflow guidelines

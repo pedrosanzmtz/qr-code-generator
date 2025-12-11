@@ -107,6 +107,8 @@ h1 {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
+    line-height: 1.2;
 }
 
 .header-logo {
@@ -428,6 +430,14 @@ input[type="url"]::placeholder {
 @media (max-width: 480px) {
     body {
         padding-bottom: 80px; /* Add space for the footer */
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 30px 20px;
     }
 
     .footer {

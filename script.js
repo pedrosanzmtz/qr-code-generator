@@ -18,9 +18,7 @@ const clearLogoBtn = document.getElementById('clearLogoBtn');
 let qrcode = null;
 let logoFile = null;
 let logoDataUrl = null;
-
-// Initialize language (will be set up properly later in the code)
-let currentLang = 'en';
+let currentLang; // Will be initialized from localStorage or browser language
 
 function isValidURL(string) {
     try {
@@ -304,12 +302,7 @@ function switchLanguage(lang) {
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
-            // Handle title tag specially
-            if (el.tagName === 'TITLE') {
-                el.textContent = translations[lang][key];
-            } else {
-                el.textContent = translations[lang][key];
-            }
+            el.textContent = translations[lang][key];
         }
     });
 
@@ -325,7 +318,7 @@ function switchLanguage(lang) {
     themeToggle.setAttribute('aria-label', translations[lang].themeToggleAria);
     langToggle.setAttribute('aria-label',
         lang === 'en' ? 'Change Language' : 'Cambiar Idioma');
-    document.querySelector('.footer-link').setAttribute('aria-label',
+    document.querySelector('a.footer-link[href*="github"]').setAttribute('aria-label',
         translations[lang].githubLinkAria);
 }
 
@@ -336,4 +329,8 @@ langToggle.addEventListener('click', () => {
 });
 
 // Initialize language on page load
-switchLanguage(currentLang);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => switchLanguage(currentLang));
+} else {
+    switchLanguage(currentLang);
+}
