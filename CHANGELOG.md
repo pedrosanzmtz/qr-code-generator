@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Contributing**: Pull requests now must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X`
 - **GitHub Workflow**: Enabled Claude to create pull requests directly via GitHub Actions
 
+### Fixed
+- **Mobile Layout**: Fixed footer overlapping main content on iPhone and mobile devices by adding responsive bottom padding and adjusting flex alignment
+
 ## [1.5.1] - 2025-12-10
 
 ### Fixed
