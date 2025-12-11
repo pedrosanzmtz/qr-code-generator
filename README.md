@@ -52,6 +52,55 @@ Most "free" QR code generators online are actually marketing funnels designed to
 
 This is a zero-dependency, static HTML application. Simply open the HTML file in a browser - no server, build tools, or installation needed.
 
+## Local Development & Testing on iPhone
+
+Test changes on your iPhone before deploying to GitHub Pages:
+
+**First time setup:**
+```bash
+chmod +x scripts/*.sh
+```
+
+### Quick Start (Basic Testing)
+```bash
+./scripts/dev-server.sh
+```
+Then visit `http://YOUR_MAC_IP:8000` from your iPhone (replace with IP shown in terminal).
+
+### Full PWA Testing (Recommended)
+For service worker, offline mode, and PWA installation testing:
+
+1. **Install local-web-server** (one-time):
+   ```bash
+   npm install -g local-web-server
+   ```
+
+2. **Start HTTPS server**:
+   ```bash
+   ./scripts/dev-server-https.sh
+   ```
+
+3. **On iPhone**:
+   - Connect to same WiFi as your Mac
+   - Visit `https://YOUR_MAC_IP:8000` (shown in terminal)
+   - Accept certificate warning (Advanced → Proceed)
+   - Install PWA and test all features!
+
+### Remote Testing with Ngrok
+Test from anywhere with a public HTTPS URL:
+
+1. **Install ngrok** (one-time):
+   ```bash
+   brew install ngrok
+   ```
+
+2. **Start tunnel**:
+   ```bash
+   ./scripts/dev-server-ngrok.sh
+   ```
+
+3. **Access from any device** using the ngrok URL shown
+
 ## For AI Code Assistants
 
 If you're an AI assistant working on this project, please read [`AI_CONTEXT.md`](AI_CONTEXT.md) for comprehensive guidelines on:
