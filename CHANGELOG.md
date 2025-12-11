@@ -17,6 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Contributing**: Pull requests now must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X`
 - **GitHub Workflow**: Enabled Claude to create pull requests directly via GitHub Actions
 
+### Fixed
+- **PWA**: Implemented force update mechanism to break service worker deadlock for users stuck on old cache
+    - Fixed race condition by checking for 'waiting' state instead of 'installed' state
+    - Extracted duplicate service worker activation logic into reusable helper function
+    - Enhanced service worker registration to force update checks on page load
+    - Added automatic activation of waiting service workers with auto-reload
+    - Improved code comments to explain service worker lifecycle interaction
+    - Users with old service workers will now automatically update on their next visit
+
 ## [1.5.1] - 2025-12-10
 
 ### Fixed
