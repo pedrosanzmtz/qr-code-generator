@@ -1,6 +1,6 @@
 // Dynamic cache versioning based on HTML metadata
 // The cache version is read from the app-version meta tag in index.html
-const DEFAULT_CACHE_NAME = 'qr-code-gen-v1.5.1'; // Default fallback
+const DEFAULT_CACHE_NAME = 'qr-code-gen-v1.6.1'; // Default fallback
 
 const ASSETS_TO_CACHE = [
   './',
