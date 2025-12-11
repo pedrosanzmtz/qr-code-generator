@@ -42,7 +42,8 @@ self.addEventListener('install', (event) => {
       await cache.addAll(ASSETS_TO_CACHE);
     })()
   );
-  // Force the waiting service worker to become the active service worker
+  // Auto-activate immediately for fresh installs
+  // This ensures new service workers don't wait for old pages to close
   self.skipWaiting();
 });
 
@@ -71,6 +72,8 @@ self.addEventListener('activate', (event) => {
 });
 
 // Listen for SKIP_WAITING message from the page
+// This handles cases where a SW is already waiting when the page loads
+// (e.g., users who visited before the force-update mechanism was added)
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     console.log('[SW] Received SKIP_WAITING message, activating immediately...');

@@ -22,10 +22,12 @@
                     console.log('[App] Checking for service worker updates...');
                     await registration.update();
 
-                    // If there's a waiting worker, activate it immediately
-                    if (registration.waiting) {
-                        console.log('[App] New service worker waiting, activating now...');
-
+                    /**
+                     * Helper function to activate a waiting service worker
+                     * Sets up the reload listener and sends the SKIP_WAITING message
+                     * @param {ServiceWorker} worker - The waiting service worker to activate
+                     */
+                    function activateWaitingWorker(worker) {
                         // Listen for the new worker to take control
                         let refreshing = false;
                         navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -37,21 +39,30 @@
                         });
 
                         // Tell the waiting worker to skip waiting
-                        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                        console.log('[App] Activating waiting service worker...');
+                        worker.postMessage({ type: 'SKIP_WAITING' });
                     }
 
-                    // Listen for updates
+                    // If there's a waiting worker on page load, activate it immediately
+                    // This handles cases where a SW is already waiting when the page loads
+                    if (registration.waiting) {
+                        console.log('[App] Found waiting service worker on load');
+                        activateWaitingWorker(registration.waiting);
+                    }
+
+                    // Listen for new service worker updates
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
-                        console.log('[SW] Update found, installing new version...');
+                        console.log('[App] Update found, installing new version...');
 
                         newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // New worker is waiting, activate it immediately
-                                console.log('[App] New service worker installed, activating...');
-                                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                            // Wait for the worker to reach 'waiting' state before activating
+                            // The lifecycle is: installing → installed → waiting → activating → activated
+                            if (newWorker.state === 'waiting') {
+                                console.log('[App] New service worker reached waiting state');
+                                activateWaitingWorker(newWorker);
                             } else if (newWorker.state === 'activated') {
-                                console.log('[SW] New version activated - refresh page to see updates');
+                                console.log('[App] New version activated');
                             }
                         });
                     });
