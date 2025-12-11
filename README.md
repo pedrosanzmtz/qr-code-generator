@@ -31,6 +31,7 @@ Most "free" QR code generators online are actually marketing funnels designed to
 - **URL Validation** - Automatic validation with helpful error messages
 - **Auto HTTPS** - Automatically adds `https://` prefix when missing
 - **Keyboard Support** - Press Enter to generate
+- **Version Display** - The current app version is displayed in the footer for easy reference.
 
 ## Usage
 
@@ -61,10 +62,6 @@ If you're an AI assistant working on this project, please read [`AI_CONTEXT.md`]
 - Common tasks and troubleshooting
 
 This will help you understand the codebase and make changes that align with the project's goals.
-
-## Version
-
-1.5.1
 
 ## License
 
