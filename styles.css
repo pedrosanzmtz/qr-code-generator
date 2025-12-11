@@ -452,14 +452,19 @@ input[type="url"]::placeholder {
 /* Responsive adjustments for mobile */
 @media (max-width: 480px) {
     body {
-        padding-bottom: 100px; /* Adjusted space for mobile footer */
+        padding-bottom: 20px; /* Reduced padding since footer is now in flow */
         align-items: flex-start; /* Prevent vertical centering on mobile */
+        flex-direction: column; /* Stack content vertically */
     }
 
     .footer {
-        bottom: 12px;
-        right: 12px;
+        position: relative; /* Change from fixed to relative on mobile */
+        bottom: auto; /* Reset bottom positioning */
+        right: auto; /* Reset right positioning */
+        margin: 20px auto 0; /* Center horizontally with top margin */
         padding: 10px 12px;
+        width: calc(100% - 40px); /* Match container width with padding */
+        max-width: 450px; /* Match container max-width */
     }
 
     .footer-text {

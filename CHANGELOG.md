@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.6.1] - 2025-12-11
 
 ### Fixed
-- **Mobile Layout**: Fixed footer overlapping main content on iPhone and mobile devices by adding responsive bottom padding and adjusting flex alignment
+- **Mobile Layout**: Fixed footer overlapping main content on iPhone and mobile browser devices by changing footer from fixed to relative positioning on mobile screens, ensuring it flows naturally below the QR generator content
 
 ## [1.5.1] - 2025-12-10
 
