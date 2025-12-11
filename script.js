@@ -19,6 +19,9 @@ let qrcode = null;
 let logoFile = null;
 let logoDataUrl = null;
 
+// Initialize language (will be set up properly later in the code)
+let currentLang = 'en';
+
 function isValidURL(string) {
     try {
         new URL(string);
@@ -32,13 +35,13 @@ function generateQRCode() {
     const url = urlInput.value.trim();
 
     if (!url) {
-        errorMsg.textContent = 'Please enter a URL';
+        errorMsg.textContent = translations[currentLang].errorEmpty;
         errorMsg.classList.add('active');
         return;
     }
 
     if (!isValidURL(url)) {
-        errorMsg.textContent = 'Please enter a valid URL (e.g., https://example.com)';
+        errorMsg.textContent = translations[currentLang].errorInvalid;
         errorMsg.classList.add('active');
         return;
     }
@@ -270,3 +273,67 @@ clearLogoBtn.addEventListener('click', () => {
         generateQRCode();
     }
 });
+
+// ========================================
+// Language/Internationalization Support
+// ========================================
+
+const langToggle = document.getElementById('langToggle');
+const currentLangSpan = document.getElementById('currentLang');
+const htmlRoot = document.getElementById('htmlRoot');
+
+// Get stored language or auto-detect from browser
+currentLang = localStorage.getItem('language') ||
+              (navigator.language.startsWith('es') ? 'es' : 'en');
+
+/**
+ * Switch the application language
+ * @param {string} lang - Language code ('en' or 'es')
+ */
+function switchLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('language', lang);
+
+    // Update HTML lang attribute
+    htmlRoot.setAttribute('lang', lang);
+
+    // Update language toggle display
+    currentLangSpan.textContent = lang.toUpperCase();
+
+    // Update all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            // Handle title tag specially
+            if (el.tagName === 'TITLE') {
+                el.textContent = translations[lang][key];
+            } else {
+                el.textContent = translations[lang][key];
+            }
+        }
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+
+    // Update aria-labels
+    themeToggle.setAttribute('aria-label', translations[lang].themeToggleAria);
+    langToggle.setAttribute('aria-label',
+        lang === 'en' ? 'Change Language' : 'Cambiar Idioma');
+    document.querySelector('.footer-link').setAttribute('aria-label',
+        translations[lang].githubLinkAria);
+}
+
+// Toggle between languages
+langToggle.addEventListener('click', () => {
+    const newLang = currentLang === 'en' ? 'es' : 'en';
+    switchLanguage(newLang);
+});
+
+// Initialize language on page load
+switchLanguage(currentLang);

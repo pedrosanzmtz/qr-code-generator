@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="app-version" content="1.6.1">
-    <title>QR Code Generator</title>
+    <title data-i18n="title">QR Code Generator</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
+    <script src="translations.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
             integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU"
             crossorigin="anonymous"></script>
@@ -76,68 +77,73 @@
 
 <body>
     <div class="container">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
-            🌙
-        </button>
-        <h1><img src="./icon-192.png" alt="QR Code Generator Logo" class="header-logo">QR Code Generator</h1>
-        <p class="subtitle">Create QR codes instantly from any URL</p>
+        <div class="header-controls">
+            <button class="language-toggle" id="langToggle" aria-label="Change Language">
+                🌐 <span id="currentLang">EN</span>
+            </button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                🌙
+            </button>
+        </div>
+        <h1><img src="./icon-192.png" alt="QR Code Generator Logo" class="header-logo"><span data-i18n="title">QR Code Generator</span></h1>
+        <p class="subtitle" data-i18n="subtitle">Create QR codes instantly from any URL</p>
 
         <div class="input-group">
-            <label for="urlInput">Enter URL</label>
-            <input type="url" id="urlInput" placeholder="https://example.com" autocomplete="off">
+            <label for="urlInput" data-i18n="urlLabel">Enter URL</label>
+            <input type="url" id="urlInput" data-i18n-placeholder="urlPlaceholder" placeholder="https://example.com" autocomplete="off">
             <p class="error-message" id="errorMsg">Please enter a valid URL</p>
         </div>
 
         <div class="customization-section">
-            <h3>Customize</h3>
+            <h3 data-i18n="customizeTitle">Customize</h3>
             <div class="options">
                 <div class="option-group">
-                    <label for="sizeSelect">Size</label>
+                    <label for="sizeSelect" data-i18n="sizeLabel">Size</label>
                     <select id="sizeSelect">
-                        <option value="128">Small (128px)</option>
-                        <option value="200" selected>Medium (200px)</option>
-                        <option value="300">Large (300px)</option>
+                        <option value="128" data-i18n="sizeSmall">Small (128px)</option>
+                        <option value="200" selected data-i18n="sizeMedium">Medium (200px)</option>
+                        <option value="300" data-i18n="sizeLarge">Large (300px)</option>
                     </select>
                 </div>
                 <div class="option-group">
-                    <label for="colorSelect">Color</label>
+                    <label for="colorSelect" data-i18n="colorLabel">Color</label>
                     <select id="colorSelect">
-                        <option value="#000000">Black</option>
-                        <option value="#0f3460">Navy</option>
-                        <option value="#2c3e50">Dark Gray</option>
-                        <option value="#8e44ad">Purple</option>
-                        <option value="#c0392b">Red</option>
-                        <option value="#27ae60">Green</option>
-                        <option value="custom">Custom Color</option>
+                        <option value="#000000" data-i18n="colorBlack">Black</option>
+                        <option value="#0f3460" data-i18n="colorNavy">Navy</option>
+                        <option value="#2c3e50" data-i18n="colorDarkGray">Dark Gray</option>
+                        <option value="#8e44ad" data-i18n="colorPurple">Purple</option>
+                        <option value="#c0392b" data-i18n="colorRed">Red</option>
+                        <option value="#27ae60" data-i18n="colorGreen">Green</option>
+                        <option value="custom" data-i18n="colorCustom">Custom Color</option>
                     </select>
                 </div>
                  <div class="option-group">
-                    <label for="logoInput">Logo (Optional)</label>
+                    <label for="logoInput" data-i18n="logoLabel">Logo (Optional)</label>
                     <div class="logo-controls">
                         <input type="file" id="logoInput" accept="image/png, image/jpeg, image/svg+xml">
-                        <button class="btn btn-secondary btn-sm" id="clearLogoBtn" style="display: none;">Clear</button>
+                        <button class="btn btn-secondary btn-sm" id="clearLogoBtn" data-i18n="clearLogoBtn" style="display: none;">Clear</button>
                     </div>
                 </div>
             </div>
 
             <div class="color-picker-container" id="colorPickerContainer" style="display: none;">
-                <label for="customColorInput">Select Color:</label>
+                <label for="customColorInput" data-i18n="selectColor">Select Color:</label>
                 <input type="color" id="customColorInput" value="#000000">
             </div>
         </div>
 
-        <button class="btn btn-primary" id="generateBtn">Generate QR Code</button>
+        <button class="btn btn-primary" id="generateBtn" data-i18n="generateBtn">Generate QR Code</button>
 
         <div class="qr-container" id="qrContainer">
             <div id="qrcode"></div>
             <div id="qrcode-hidden" style="display: none;"></div>
             <p class="url-display" id="urlDisplay"></p>
             <div class="download-options">
-                <label>Download as:</label>
+                <label data-i18n="downloadLabel">Download as:</label>
                 <div class="download-buttons">
-                    <button class="btn btn-secondary" id="downloadPng">PNG</button>
-                    <button class="btn btn-secondary" id="downloadJpeg">JPEG</button>
-                    <button class="btn btn-secondary" id="downloadSvg">SVG</button>
+                    <button class="btn btn-secondary" id="downloadPng" data-i18n="downloadPng">PNG</button>
+                    <button class="btn btn-secondary" id="downloadJpeg" data-i18n="downloadJpeg">JPEG</button>
+                    <button class="btn btn-secondary" id="downloadSvg" data-i18n="downloadSvg">SVG</button>
                 </div>
             </div>
         </div>

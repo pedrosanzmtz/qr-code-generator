@@ -68,11 +68,43 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Theme Toggle Button */
-.theme-toggle {
+/* Header Controls (Language & Theme Toggles) */
+.header-controls {
     position: absolute;
     top: 20px;
     right: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Language Toggle Button */
+.language-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.language-toggle:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .language-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
     background: none;
     border: none;
     font-size: 1.5rem;
