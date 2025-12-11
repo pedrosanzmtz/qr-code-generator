@@ -187,6 +187,16 @@ urlInput.addEventListener('keypress', (e) => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const versionMeta = document.querySelector('meta[name="app-version"]');
+    if (versionMeta) {
+        const version = versionMeta.getAttribute('content');
+        if (version) {
+            document.getElementById('appVersion').textContent = `v${version}`;
+        }
+    }
+});
+
 urlInput.addEventListener('input', () => {
     errorMsg.classList.remove('active');
 });
