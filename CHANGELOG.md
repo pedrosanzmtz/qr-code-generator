@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitHub Workflow**: Created PR template (`.github/PULL_REQUEST_TEMPLATE.md`) requiring issue references
 - **Documentation**: Enhanced `CONTRIBUTING.md` with PR requirements and workflow guidelines
 - **Documentation**: Added `.github/WORKFLOW_ENHANCEMENTS.md` with instructions for optional workflow validations
+- **Development**: Added three local development server scripts for iPhone testing
+  - `scripts/dev-server.sh`: Basic HTTP server for quick testing
+  - `scripts/dev-server-https.sh`: HTTPS server with self-signed certificates for full PWA testing
+  - `scripts/dev-server-ngrok.sh`: Ngrok tunnel for remote testing with public HTTPS URL
+- **Documentation**: Added "Local Development & Testing on iPhone" section to README
 
 ### Changed
 - **Contributing**: Pull requests now must reference an issue using `Closes #X`, `Fixes #X`, or `Resolves #X`

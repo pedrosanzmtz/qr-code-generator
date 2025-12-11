@@ -16,8 +16,24 @@ if ! command -v ws &> /dev/null; then
     exit 1
 fi
 
-# Get local IP address (macOS)
-IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | head -n 1)
+# Check if port 8000 is already in use
+if lsof -Pi :8000 -sTCP:LISTEN -t >/dev/null 2>&1; then
+    echo "⚠️  Port 8000 is already in use"
+    echo "Please stop the other process or use a different port"
+    exit 1
+fi
+
+# Cross-platform IP detection
+if command -v ifconfig &> /dev/null; then
+    # macOS/BSD
+    IP=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | head -n 1)
+elif command -v ip &> /dev/null; then
+    # Linux
+    IP=$(ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1 | head -n 1)
+else
+    IP="<YOUR_IP_HERE>"
+    echo "⚠️  Could not auto-detect IP address"
+fi
 
 echo "=========================================="
 echo "  QR Code Generator - Dev Server (HTTPS)"

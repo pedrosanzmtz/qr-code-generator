@@ -56,6 +56,11 @@ This is a zero-dependency, static HTML application. Simply open the HTML file in
 
 Test changes on your iPhone before deploying to GitHub Pages:
 
+**First time setup:**
+```bash
+chmod +x scripts/*.sh
+```
+
 ### Quick Start (Basic Testing)
 ```bash
 ./scripts/dev-server.sh
