@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **Mobile Compatibility**: Improved language toggle reliability on Safari and iOS browsers
     - Added touchstart event handler for better iOS Safari touch support
+    - Added debounce flag to prevent double-firing on touch devices (touchstart + click)
     - Added preventDefault to avoid event conflicts on mobile browsers
     - Added try-catch for localStorage to handle Safari private mode gracefully
     - Added debug logging to track language switching behavior

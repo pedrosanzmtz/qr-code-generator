@@ -355,11 +355,25 @@ function switchLanguage(lang) {
 }
 
 // Toggle between languages
+let isTogglingLanguage = false;
 function handleLanguageToggle(e) {
+    // Prevent double-firing on touch devices (touchstart + click)
+    if (isTogglingLanguage) {
+        console.log('[Lang Toggle] Prevented double-fire');
+        return;
+    }
+
+    isTogglingLanguage = true;
     e.preventDefault(); // Prevent any default behavior
+
     const newLang = currentLang === 'en' ? 'es' : 'en';
     console.log(`[Lang Toggle] Switching from ${currentLang} to ${newLang}`);
     switchLanguage(newLang);
+
+    // Reset flag after a short delay
+    setTimeout(() => {
+        isTogglingLanguage = false;
+    }, 300);
 }
 
 // Add both click and touchstart for better mobile Safari support
