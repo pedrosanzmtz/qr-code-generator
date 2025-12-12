@@ -18,7 +18,12 @@ const clearLogoBtn = document.getElementById('clearLogoBtn');
 let qrcode = null;
 let logoFile = null;
 let logoDataUrl = null;
-let currentLang; // Will be initialized from localStorage or browser language
+
+// Initialize language immediately with validation
+const storedLang = localStorage.getItem('language');
+const isValidLang = (lang) => lang === 'en' || lang === 'es';
+let currentLang = isValidLang(storedLang) ? storedLang :
+                  (navigator.language?.startsWith('es') ? 'es' : 'en');
 
 function isValidURL(string) {
     try {
@@ -280,15 +285,17 @@ const langToggle = document.getElementById('langToggle');
 const currentLangSpan = document.getElementById('currentLang');
 const htmlRoot = document.getElementById('htmlRoot');
 
-// Get stored language or auto-detect from browser
-currentLang = localStorage.getItem('language') ||
-              (navigator.language.startsWith('es') ? 'es' : 'en');
-
 /**
  * Switch the application language
  * @param {string} lang - Language code ('en' or 'es')
  */
 function switchLanguage(lang) {
+    // Validate language code
+    if (!isValidLang(lang)) {
+        console.warn(`Invalid language code: ${lang}, defaulting to 'en'`);
+        lang = 'en';
+    }
+
     currentLang = lang;
     localStorage.setItem('language', lang);
 
@@ -303,6 +310,10 @@ function switchLanguage(lang) {
         const key = el.getAttribute('data-i18n');
         if (translations[lang] && translations[lang][key]) {
             el.textContent = translations[lang][key];
+        } else if (translations['en'] && translations['en'][key]) {
+            // Fallback to English if translation is missing
+            el.textContent = translations['en'][key];
+            console.warn(`Missing translation for key "${key}" in language "${lang}"`);
         }
     });
 
@@ -311,15 +322,25 @@ function switchLanguage(lang) {
         const key = el.getAttribute('data-i18n-placeholder');
         if (translations[lang] && translations[lang][key]) {
             el.placeholder = translations[lang][key];
+        } else if (translations['en'] && translations['en'][key]) {
+            // Fallback to English if translation is missing
+            el.placeholder = translations['en'][key];
+            console.warn(`Missing placeholder translation for key "${key}" in language "${lang}"`);
         }
     });
 
-    // Update aria-labels
-    themeToggle.setAttribute('aria-label', translations[lang].themeToggleAria);
+    // Update aria-labels with null-safety
+    if (translations[lang]?.themeToggleAria) {
+        themeToggle.setAttribute('aria-label', translations[lang].themeToggleAria);
+    }
+
     langToggle.setAttribute('aria-label',
         lang === 'en' ? 'Change Language' : 'Cambiar Idioma');
-    document.querySelector('a.footer-link[href*="github"]').setAttribute('aria-label',
-        translations[lang].githubLinkAria);
+
+    const githubLink = document.querySelector('a.footer-link[href*="github"]');
+    if (githubLink && translations[lang]?.githubLinkAria) {
+        githubLink.setAttribute('aria-label', translations[lang].githubLinkAria);
+    }
 }
 
 // Toggle between languages
