@@ -290,6 +290,8 @@ const htmlRoot = document.getElementById('htmlRoot');
  * @param {string} lang - Language code ('en' or 'es')
  */
 function switchLanguage(lang) {
+    console.log(`[switchLanguage] Called with lang: ${lang}`);
+
     // Validate language code
     if (!isValidLang(lang)) {
         console.warn(`Invalid language code: ${lang}, defaulting to 'en'`);
@@ -297,7 +299,14 @@ function switchLanguage(lang) {
     }
 
     currentLang = lang;
-    localStorage.setItem('language', lang);
+    console.log(`[switchLanguage] Setting language to: ${lang}`);
+
+    try {
+        localStorage.setItem('language', lang);
+        console.log(`[switchLanguage] Saved to localStorage: ${lang}`);
+    } catch (e) {
+        console.error('[switchLanguage] localStorage error (might be in private mode):', e);
+    }
 
     // Update HTML lang attribute
     htmlRoot.setAttribute('lang', lang);
@@ -341,13 +350,21 @@ function switchLanguage(lang) {
     if (githubLink && translations[lang]?.githubLinkAria) {
         githubLink.setAttribute('aria-label', translations[lang].githubLinkAria);
     }
+
+    console.log(`[switchLanguage] Language switch complete. Current lang: ${currentLang}`);
 }
 
 // Toggle between languages
-langToggle.addEventListener('click', () => {
+function handleLanguageToggle(e) {
+    e.preventDefault(); // Prevent any default behavior
     const newLang = currentLang === 'en' ? 'es' : 'en';
+    console.log(`[Lang Toggle] Switching from ${currentLang} to ${newLang}`);
     switchLanguage(newLang);
-});
+}
+
+// Add both click and touchstart for better mobile Safari support
+langToggle.addEventListener('click', handleLanguageToggle);
+langToggle.addEventListener('touchstart', handleLanguageToggle, { passive: false });
 
 // Initialize language on page load
 if (document.readyState === 'loading') {
