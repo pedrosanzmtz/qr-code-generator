@@ -290,8 +290,6 @@ const htmlRoot = document.getElementById('htmlRoot');
  * @param {string} lang - Language code ('en' or 'es')
  */
 function switchLanguage(lang) {
-    console.log(`[switchLanguage] Called with lang: ${lang}`);
-
     // Validate language code
     if (!isValidLang(lang)) {
         console.warn(`Invalid language code: ${lang}, defaulting to 'en'`);
@@ -299,13 +297,11 @@ function switchLanguage(lang) {
     }
 
     currentLang = lang;
-    console.log(`[switchLanguage] Setting language to: ${lang}`);
 
     try {
         localStorage.setItem('language', lang);
-        console.log(`[switchLanguage] Saved to localStorage: ${lang}`);
     } catch (e) {
-        console.error('[switchLanguage] localStorage error (might be in private mode):', e);
+        console.error('[switchLanguage] localStorage error (Safari private mode?):', e);
     }
 
     // Update HTML lang attribute
@@ -350,8 +346,6 @@ function switchLanguage(lang) {
     if (githubLink && translations[lang]?.githubLinkAria) {
         githubLink.setAttribute('aria-label', translations[lang].githubLinkAria);
     }
-
-    console.log(`[switchLanguage] Language switch complete. Current lang: ${currentLang}`);
 }
 
 // Toggle between languages
@@ -359,21 +353,24 @@ let isTogglingLanguage = false;
 function handleLanguageToggle(e) {
     // Prevent double-firing on touch devices (touchstart + click)
     if (isTogglingLanguage) {
-        console.log('[Lang Toggle] Prevented double-fire');
         return;
     }
 
     isTogglingLanguage = true;
-    e.preventDefault(); // Prevent any default behavior
+
+    // Only preventDefault for touch to avoid 300ms click delay
+    // Keep keyboard events working (Space/Enter)
+    if (e.type === 'touchstart') {
+        e.preventDefault();
+    }
 
     const newLang = currentLang === 'en' ? 'es' : 'en';
-    console.log(`[Lang Toggle] Switching from ${currentLang} to ${newLang}`);
     switchLanguage(newLang);
 
-    // Reset flag after a short delay
+    // Reset debounce flag after event processing window
     setTimeout(() => {
         isTogglingLanguage = false;
-    }, 300);
+    }, 100);
 }
 
 // Add both click and touchstart for better mobile Safari support
