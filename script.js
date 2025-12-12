@@ -297,7 +297,12 @@ function switchLanguage(lang) {
     }
 
     currentLang = lang;
-    localStorage.setItem('language', lang);
+
+    try {
+        localStorage.setItem('language', lang);
+    } catch (e) {
+        console.error('[switchLanguage] localStorage error (Safari private mode?):', e);
+    }
 
     // Update HTML lang attribute
     htmlRoot.setAttribute('lang', lang);
@@ -344,10 +349,33 @@ function switchLanguage(lang) {
 }
 
 // Toggle between languages
-langToggle.addEventListener('click', () => {
+let isTogglingLanguage = false;
+function handleLanguageToggle(e) {
+    // Prevent double-firing on touch devices (touchstart + click)
+    if (isTogglingLanguage) {
+        return;
+    }
+
+    isTogglingLanguage = true;
+
+    // Only preventDefault for touch to avoid 300ms click delay
+    // Keep keyboard events working (Space/Enter)
+    if (e.type === 'touchstart') {
+        e.preventDefault();
+    }
+
     const newLang = currentLang === 'en' ? 'es' : 'en';
     switchLanguage(newLang);
-});
+
+    // Reset debounce flag after event processing window
+    setTimeout(() => {
+        isTogglingLanguage = false;
+    }, 100);
+}
+
+// Add both click and touchstart for better mobile Safari support
+langToggle.addEventListener('click', handleLanguageToggle);
+langToggle.addEventListener('touchstart', handleLanguageToggle, { passive: false });
 
 // Initialize language on page load
 if (document.readyState === 'loading') {

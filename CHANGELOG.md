@@ -29,6 +29,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **GitHub Workflow**: Enabled Claude to create pull requests directly via GitHub Actions
 
 ### Fixed
+- **Mobile Compatibility**: Improved language toggle reliability on Safari and iOS browsers
+    - Added touchstart event handler for better iOS Safari touch support
+    - Added debounce flag to prevent double-firing on touch devices (touchstart + click)
+    - Conditionally apply preventDefault only to touch events (preserves keyboard navigation)
+    - Added try-catch for localStorage to handle Safari private mode gracefully
+- **Accessibility**: Preserved keyboard navigation (Space/Enter keys) for language toggle button
 - **PWA**: Implemented force update mechanism to break service worker deadlock for users stuck on old cache
     - Fixed race condition by checking for 'waiting' state instead of 'installed' state
     - Extracted duplicate service worker activation logic into reusable helper function
