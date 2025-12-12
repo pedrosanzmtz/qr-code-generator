@@ -19,6 +19,12 @@ let qrcode = null;
 let logoFile = null;
 let logoDataUrl = null;
 
+// Initialize language immediately with validation
+const storedLang = localStorage.getItem('language');
+const isValidLang = (lang) => lang === 'en' || lang === 'es';
+let currentLang = isValidLang(storedLang) ? storedLang :
+                  (navigator.language?.startsWith('es') ? 'es' : 'en');
+
 function isValidURL(string) {
     try {
         new URL(string);
@@ -32,13 +38,13 @@ function generateQRCode() {
     const url = urlInput.value.trim();
 
     if (!url) {
-        errorMsg.textContent = 'Please enter a URL';
+        errorMsg.textContent = translations[currentLang].errorEmpty;
         errorMsg.classList.add('active');
         return;
     }
 
     if (!isValidURL(url)) {
-        errorMsg.textContent = 'Please enter a valid URL (e.g., https://example.com)';
+        errorMsg.textContent = translations[currentLang].errorInvalid;
         errorMsg.classList.add('active');
         return;
     }
@@ -270,3 +276,82 @@ clearLogoBtn.addEventListener('click', () => {
         generateQRCode();
     }
 });
+
+// ========================================
+// Language/Internationalization Support
+// ========================================
+
+const langToggle = document.getElementById('langToggle');
+const currentLangSpan = document.getElementById('currentLang');
+const htmlRoot = document.getElementById('htmlRoot');
+
+/**
+ * Switch the application language
+ * @param {string} lang - Language code ('en' or 'es')
+ */
+function switchLanguage(lang) {
+    // Validate language code
+    if (!isValidLang(lang)) {
+        console.warn(`Invalid language code: ${lang}, defaulting to 'en'`);
+        lang = 'en';
+    }
+
+    currentLang = lang;
+    localStorage.setItem('language', lang);
+
+    // Update HTML lang attribute
+    htmlRoot.setAttribute('lang', lang);
+
+    // Update language toggle display
+    currentLangSpan.textContent = lang.toUpperCase();
+
+    // Update all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        } else if (translations['en'] && translations['en'][key]) {
+            // Fallback to English if translation is missing
+            el.textContent = translations['en'][key];
+            console.warn(`Missing translation for key "${key}" in language "${lang}"`);
+        }
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        } else if (translations['en'] && translations['en'][key]) {
+            // Fallback to English if translation is missing
+            el.placeholder = translations['en'][key];
+            console.warn(`Missing placeholder translation for key "${key}" in language "${lang}"`);
+        }
+    });
+
+    // Update aria-labels with null-safety
+    if (translations[lang]?.themeToggleAria) {
+        themeToggle.setAttribute('aria-label', translations[lang].themeToggleAria);
+    }
+
+    langToggle.setAttribute('aria-label',
+        lang === 'en' ? 'Change Language' : 'Cambiar Idioma');
+
+    const githubLink = document.querySelector('a.footer-link[href*="github"]');
+    if (githubLink && translations[lang]?.githubLinkAria) {
+        githubLink.setAttribute('aria-label', translations[lang].githubLinkAria);
+    }
+}
+
+// Toggle between languages
+langToggle.addEventListener('click', () => {
+    const newLang = currentLang === 'en' ? 'es' : 'en';
+    switchLanguage(newLang);
+});
+
+// Initialize language on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => switchLanguage(currentLang));
+} else {
+    switchLanguage(currentLang);
+}

@@ -1,10 +1,13 @@
 {
   "name": "QR Code Generator",
   "short_name": "QR Gen",
+  "description": "Create QR codes instantly from any URL",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0f3460",
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -16,5 +19,12 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "localized": {
+    "es": {
+      "name": "Generador de Códigos QR",
+      "short_name": "Gen QR",
+      "description": "Crea códigos QR al instante desde cualquier URL"
+    }
+  }
 }
