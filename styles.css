@@ -104,14 +104,17 @@ h1 {
     margin-bottom: 10px;
     font-size: 1.8rem;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .header-logo {
     width: 40px;
     height: 40px;
     object-fit: contain;
-    vertical-align: middle;
-    margin-right: 10px;
+    flex-shrink: 0;
 }
 
 .subtitle {
