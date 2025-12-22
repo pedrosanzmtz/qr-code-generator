@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (SvelteKit Migration)
+- **i18n**: Added translated file input for logo uploader
+  - Custom styled file input button with translations
+  - English: "Choose file" / "No file chosen"
+  - Spanish: "Seleccionar archivo" / "Ningún archivo"
+
 ### Added
 - **Internationalization**: Added Spanish (Latin America) language support
   - Created translations.js with English and Spanish translations
