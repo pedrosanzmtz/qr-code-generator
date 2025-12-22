@@ -14,6 +14,8 @@ export type TranslationKey =
 	| 'colorLabel'
 	| 'logoLabel'
 	| 'clearLogoBtn'
+	| 'chooseFile'
+	| 'noFileChosen'
 	| 'sizeSmall'
 	| 'sizeMedium'
 	| 'sizeLarge'
@@ -47,6 +49,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
 		colorLabel: 'Color',
 		logoLabel: 'Logo (Optional)',
 		clearLogoBtn: 'Clear',
+		chooseFile: 'Choose file',
+		noFileChosen: 'No file chosen',
 		sizeSmall: 'Small (128px)',
 		sizeMedium: 'Medium (200px)',
 		sizeLarge: 'Large (300px)',
@@ -79,6 +83,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
 		colorLabel: 'Color',
 		logoLabel: 'Logo (Opcional)',
 		clearLogoBtn: 'Limpiar',
+		chooseFile: 'Seleccionar archivo',
+		noFileChosen: 'Ningún archivo',
 		sizeSmall: 'Pequeño (128px)',
 		sizeMedium: 'Mediano (200px)',
 		sizeLarge: 'Grande (300px)',
