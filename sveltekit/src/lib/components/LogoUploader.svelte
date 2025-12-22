@@ -60,21 +60,20 @@
 
 <style>
 	.option-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		flex: 1;
 	}
 
 	label {
-		font-weight: 500;
-		font-size: 0.9rem;
+		display: block;
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+		margin-bottom: 6px;
 	}
 
 	.logo-controls {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
+		gap: 10px;
 	}
 
 	.hidden-input {
@@ -90,57 +89,48 @@
 	}
 
 	.btn {
-		padding: 0.25rem 0.75rem;
+		padding: 6px 12px;
 		border: none;
-		border-radius: 4px;
+		border-radius: 6px;
 		cursor: pointer;
 		font-size: 0.85rem;
-		transition: background-color 0.2s;
+		font-weight: 500;
+		transition:
+			background-color 0.2s,
+			border-color 0.2s;
 	}
 
 	.btn-file {
-		background: #e2e8f0;
-		color: #4a5568;
-		border: 1px solid #cbd5e0;
+		border: 1px solid var(--border-color);
+		background-color: var(--input-bg);
+		color: var(--input-text);
 	}
 
 	.btn-file:hover {
-		background: #cbd5e0;
-	}
-
-	:global(.dark-mode) .btn-file {
-		background: #4a5568;
-		color: #e2e8f0;
-		border-color: #718096;
-	}
-
-	:global(.dark-mode) .btn-file:hover {
-		background: #718096;
+		background-color: var(--btn-secondary-hover);
 	}
 
 	.file-name {
 		font-size: 0.85rem;
-		color: #718096;
+		color: var(--text-secondary);
+		min-width: 0;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
-	:global(.dark-mode) .file-name {
-		color: #a0aec0;
-	}
-
 	.btn-secondary {
-		background: #6c757d;
-		color: white;
+		background: var(--btn-secondary-bg);
+		color: var(--btn-secondary-text);
 	}
 
 	.btn-secondary:hover {
-		background: #5a6268;
+		background: var(--btn-secondary-hover);
 	}
 
 	.btn-sm {
-		padding: 0.25rem 0.5rem;
+		padding: 6px 12px;
+		font-size: 0.8rem;
 	}
 </style>
