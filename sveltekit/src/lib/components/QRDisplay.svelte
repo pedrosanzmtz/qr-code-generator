@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { t } from '$lib/stores/language';
 	import { qrSettings } from '$lib/stores/qrSettings';
-	import { canvasToSvg, downloadCanvas, downloadSvg } from '$lib/utils/qrcode';
-	import { onMount } from 'svelte';
-	import type QRCodeType from 'qrcodejs';
+	import { generateQRCode } from '$lib/utils/qrGenerator';
+	import { downloadQRCode, type ExportFormat } from '$lib/utils/exportFormats';
 
 	interface Props {
 		url: string;
@@ -14,102 +13,44 @@
 
 	let qrContainer: HTMLDivElement | undefined = $state();
 	let canvas: HTMLCanvasElement | null = $state(null);
-	let QRCode: typeof QRCodeType | null = null;
-
-	onMount(async () => {
-		const module = await import('qrcodejs');
-		QRCode = module.default;
-	});
 
 	$effect(() => {
-		if (url && visible && QRCode && qrContainer) {
+		if (url && visible && qrContainer) {
 			generateQR();
 		}
 	});
 
-	function generateQR() {
-		if (!QRCode || !qrContainer) return;
+	async function generateQR() {
+		if (!qrContainer) return;
 
-		const container = qrContainer;
 		const size = $qrSettings.size;
 		const color = qrSettings.getColor($qrSettings);
 		const logoDataUrl = $qrSettings.logoDataUrl;
 
-		container.innerHTML = '';
+		try {
+			const newCanvas = await generateQRCode(url, {
+				size,
+				color,
+				logoDataUrl
+			});
 
-		new QRCode(container, {
-			text: url,
-			width: size,
-			height: size,
-			colorDark: color,
-			colorLight: '#ffffff',
-			correctLevel: QRCode.CorrectLevel.H
-		});
-
-		const observer = new MutationObserver((mutations) => {
-			for (const mutation of mutations) {
-				if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-					const qrImg = container.querySelector('img');
-					if (qrImg) {
-						qrImg.onload = () => processQRImage(qrImg, size, logoDataUrl, container);
-						if (qrImg.complete) processQRImage(qrImg, size, logoDataUrl, container);
-						observer.disconnect();
-					}
-				}
-			}
-		});
-
-		observer.observe(container, { childList: true });
-	}
-
-	function processQRImage(
-		qrImg: HTMLImageElement,
-		size: number,
-		logoDataUrl: string | null,
-		container: HTMLDivElement
-	) {
-		const newCanvas = document.createElement('canvas');
-		newCanvas.width = size;
-		newCanvas.height = size;
-		const ctx = newCanvas.getContext('2d');
-		if (!ctx) return;
-
-		ctx.drawImage(qrImg, 0, 0, size, size);
-
-		if (logoDataUrl) {
-			const logoImg = new Image();
-			logoImg.onload = () => {
-				const logoSize = size * 0.25;
-				const logoX = (size - logoSize) / 2;
-				const logoY = (size - logoSize) / 2;
-
-				ctx.fillStyle = '#ffffff';
-				ctx.fillRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
-				ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize);
-
-				container.innerHTML = '';
-				container.appendChild(newCanvas);
-				canvas = newCanvas;
-			};
-			logoImg.src = logoDataUrl;
-		} else {
-			container.innerHTML = '';
-			container.appendChild(newCanvas);
+			// Clear container and append new canvas
+			qrContainer.innerHTML = '';
+			qrContainer.appendChild(newCanvas);
 			canvas = newCanvas;
+		} catch (error) {
+			console.error('Failed to generate QR code:', error);
 		}
 	}
 
-	function handleDownload(format: 'png' | 'jpeg' | 'svg') {
-		if (format === 'svg') {
-			if (!canvas) return;
-			const size = $qrSettings.size;
-			const color = qrSettings.getColor($qrSettings);
-			const svgContent = canvasToSvg(canvas, size, color, $qrSettings.logoDataUrl);
-			downloadSvg(svgContent);
-		} else {
-			if (!canvas) return;
-			downloadCanvas(canvas, format);
-		}
+	function handleDownload(format: ExportFormat) {
+		if (!canvas) return;
+
+		const size = $qrSettings.size;
+		const color = qrSettings.getColor($qrSettings);
+		const logoDataUrl = $qrSettings.logoDataUrl;
+
+		downloadQRCode(canvas, format, size, color, logoDataUrl);
 	}
 </script>
 
