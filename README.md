@@ -1,8 +1,8 @@
 # QR Code Generator
 
-A simple, elegant QR code generator built with vanilla HTML, CSS, and JavaScript. Enter any URL and instantly create customizable QR codes with size and color options.
+A simple, elegant QR code generator built with SvelteKit. Enter any URL and instantly create customizable QR codes with size and color options.
 
-**Live Demo:** https://pedrosanzmtz.github.io/qr-code-generator/
+**Live Demo:** https://qr-code-generator-silk-one.vercel.app/
 
 ## Why This Project?
 
@@ -36,75 +36,46 @@ Most "free" QR code generators online are actually marketing funnels designed to
 
 ## Usage
 
-1. Open `index.html` in any modern web browser
+1. Visit https://qr-code-generator-silk-one.vercel.app/
 2. Enter a URL in the input field
 3. Select your preferred size and color
-4. Click "Generate QR Code" or press Enter
-5. Download the QR code as PNG, JPEG, or SVG
+4. Optionally upload a logo
+5. Click "Generate QR Code" or press Enter
+6. Download the QR code as PNG, JPEG, or SVG
 
 ## Tech Stack
 
-- HTML5
-- CSS3 (with modern features like CSS Grid, Flexbox, and gradients)
-- Vanilla JavaScript
-- [qrcode.js](https://github.com/davidshimjs/qrcodejs) - QR code generation library
+- [SvelteKit](https://kit.svelte.dev/) - Full-stack framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Vite](https://vitejs.dev/) - Build tool
+- [@vite-pwa/sveltekit](https://vite-pwa-org.netlify.app/frameworks/sveltekit.html) - PWA support
+- [qrcode](https://www.npmjs.com/package/qrcode) - QR code generation library
+- [Vercel](https://vercel.com/) - Deployment platform
 
-## No Build Required
+## Local Development
 
-This is a zero-dependency, static HTML application. Simply open the HTML file in a browser - no server, build tools, or installation needed.
-
-## Local Development & Testing on iPhone
-
-Test changes on your iPhone before deploying to GitHub Pages:
-
-**First time setup:**
 ```bash
-chmod +x scripts/*.sh
+# Navigate to the SvelteKit project
+cd sveltekit
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-### Quick Start (Basic Testing)
-```bash
-./scripts/dev-server.sh
-```
-Then visit `http://YOUR_MAC_IP:8000` from your iPhone (replace with IP shown in terminal).
-
-### Full PWA Testing (Recommended)
-For service worker, offline mode, and PWA installation testing:
-
-1. **Install local-web-server** (one-time):
-   ```bash
-   npm install -g local-web-server
-   ```
-
-2. **Start HTTPS server**:
-   ```bash
-   ./scripts/dev-server-https.sh
-   ```
-
-3. **On iPhone**:
-   - Connect to same WiFi as your Mac
-   - Visit `https://YOUR_MAC_IP:8000` (shown in terminal)
-   - Accept certificate warning (Advanced → Proceed)
-   - Install PWA and test all features!
-
-### Remote Testing with Ngrok
-Test from anywhere with a public HTTPS URL:
-
-1. **Install ngrok** (one-time):
-   ```bash
-   brew install ngrok
-   ```
-
-2. **Start tunnel**:
-   ```bash
-   ./scripts/dev-server-ngrok.sh
-   ```
-
-3. **Access from any device** using the ngrok URL shown
+The development server runs at `http://localhost:5173/`.
 
 ## For AI Code Assistants
 
-If you're an AI assistant working on this project, please read [`AI_CONTEXT.md`](AI_CONTEXT.md) for comprehensive guidelines on:
+If you're an AI assistant working on this project, please read [`CLAUDE.md`](CLAUDE.md) for comprehensive guidelines on:
 - Project structure and philosophy
 - Development workflow and best practices
 - Feature implementation patterns
