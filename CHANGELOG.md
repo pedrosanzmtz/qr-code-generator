@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added (SvelteKit Migration)
+- **PWA**: Configured Progressive Web App support
+  - Installed @vite-pwa/sveltekit for service worker generation
+  - Auto-update service worker with Workbox
+  - Cache-first strategy for assets, network-first for navigation
+  - App installable on desktop and mobile
 - **Deployment**: Configured Vercel adapter for SvelteKit deployment
   - Replaced adapter-static with adapter-vercel
   - Enables automatic deployments from GitHub
