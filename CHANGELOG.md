@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added (SvelteKit Migration)
+- **Deployment**: Configured Vercel adapter for SvelteKit deployment
+  - Replaced adapter-static with adapter-vercel
+  - Enables automatic deployments from GitHub
+  - Preview deployments for pull requests
 - **i18n**: Added translated file input for logo uploader
   - Custom styled file input button with translations
   - English: "Choose file" / "No file chosen"
