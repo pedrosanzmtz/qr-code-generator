@@ -12,28 +12,52 @@
 
 <style>
 	.language-toggle {
-		background: none;
-		border: none;
-		font-size: 0.9rem;
-		font-weight: 600;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 48px;
+		height: 48px;
+		background: var(--bg-card);
+		color: var(--text-secondary);
+		border-radius: 50%;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+		border: 1px solid var(--border-color);
+		transition:
+			transform 0.3s,
+			box-shadow 0.3s,
+			background-color 0.3s,
+			color 0.3s;
 		cursor: pointer;
-		padding: 0.5rem 0.75rem;
-		border-radius: 4px;
-		color: inherit;
-		transition: background-color 0.2s;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.5px;
 	}
 
 	.language-toggle:hover {
-		background-color: rgba(0, 0, 0, 0.1);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+		color: var(--text-primary);
+		background-color: var(--input-bg);
 	}
 
-	:global(.dark-mode) .language-toggle:hover {
-		background-color: rgba(255, 255, 255, 0.1);
+	.language-toggle:focus {
+		outline: 2px solid var(--text-primary);
+		outline-offset: 2px;
 	}
 
 	.current-lang {
-		display: inline-block;
-		min-width: 2em;
-		text-align: center;
+		font-size: 0.85rem;
+	}
+
+	@media (max-width: 480px) {
+		.language-toggle {
+			width: 44px;
+			height: 44px;
+			font-size: 0.75rem;
+		}
+
+		.current-lang {
+			font-size: 0.75rem;
+		}
 	}
 </style>

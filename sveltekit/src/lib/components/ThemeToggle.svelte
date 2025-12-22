@@ -13,13 +13,14 @@
 		border: none;
 		font-size: 1.5rem;
 		cursor: pointer;
-		padding: 0.5rem;
+		padding: 5px;
 		border-radius: 50%;
-		transition: background-color 0.2s;
+		transition: transform 0.3s ease;
 	}
 
 	.theme-toggle:hover {
-		background-color: rgba(0, 0, 0, 0.1);
+		transform: scale(1.1);
+		background-color: rgba(0, 0, 0, 0.05);
 	}
 
 	:global(.dark-mode) .theme-toggle:hover {

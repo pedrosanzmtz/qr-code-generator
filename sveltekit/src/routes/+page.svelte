@@ -2,18 +2,51 @@
 	import { t } from '$lib/stores/language';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import LanguageToggle from '$lib/components/LanguageToggle.svelte';
-	import QRGenerator from '$lib/components/QRGenerator.svelte';
+	import URLInput from '$lib/components/URLInput.svelte';
+	import GenerateButton from '$lib/components/GenerateButton.svelte';
 	import QRDisplay from '$lib/components/QRDisplay.svelte';
 	import SizeSelector from '$lib/components/SizeSelector.svelte';
 	import ColorSelector from '$lib/components/ColorSelector.svelte';
 	import LogoUploader from '$lib/components/LogoUploader.svelte';
 
+	let url = $state('');
+	let errorMessage = $state('');
 	let generatedUrl = $state('');
 	let showQR = $state(false);
 
-	function handleGenerate(url: string) {
-		generatedUrl = url;
+	function isValidURL(string: string): boolean {
+		try {
+			new URL(string);
+			return true;
+		} catch {
+			return false;
+		}
+	}
+
+	function handleGenerate() {
+		const trimmedUrl = url.trim();
+
+		if (!trimmedUrl) {
+			errorMessage = $t.errorEmpty;
+			return;
+		}
+
+		if (!isValidURL(trimmedUrl)) {
+			errorMessage = $t.errorInvalid;
+			return;
+		}
+
+		errorMessage = '';
+		generatedUrl = trimmedUrl;
 		showQR = true;
+	}
+
+	function handleUrlChange(newUrl: string) {
+		url = newUrl;
+	}
+
+	function handleErrorClear() {
+		errorMessage = '';
 	}
 </script>
 
@@ -32,7 +65,13 @@
 	</h1>
 	<p class="subtitle">{$t.subtitle}</p>
 
-	<QRGenerator onGenerate={handleGenerate} />
+	<URLInput
+		{url}
+		{errorMessage}
+		onUrlChange={handleUrlChange}
+		onErrorClear={handleErrorClear}
+		onGenerate={handleGenerate}
+	/>
 
 	<div class="customization-section">
 		<h3>{$t.customizeTitle}</h3>
@@ -42,6 +81,8 @@
 			<LogoUploader />
 		</div>
 	</div>
+
+	<GenerateButton onGenerate={handleGenerate} />
 
 	<QRDisplay url={generatedUrl} visible={showQR} />
 </div>

@@ -78,75 +78,75 @@
 <style>
 	.qr-container {
 		display: none;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
-		padding: 1.5rem;
-		background: #f8f9fa;
-		border-radius: 8px;
-		margin-top: 1.5rem;
+		margin-top: 30px;
+		text-align: center;
 	}
 
 	.qr-container.active {
-		display: flex;
-	}
-
-	:global(.dark-mode) .qr-container {
-		background: #2d3748;
+		display: block;
 	}
 
 	.qr-code {
+		display: inline-block;
+		padding: 20px;
 		background: white;
-		padding: 1rem;
-		border-radius: 4px;
+		border-radius: 12px;
+		border: 2px solid var(--qr-border);
+	}
+
+	.qr-code :global(canvas) {
+		display: block;
 	}
 
 	.url-display {
+		margin-top: 15px;
+		padding: 10px 15px;
+		background: var(--url-bg);
+		border-radius: 8px;
 		font-size: 0.85rem;
-		color: #666;
+		color: var(--text-secondary);
 		word-break: break-all;
-		text-align: center;
-		max-width: 100%;
-	}
-
-	:global(.dark-mode) .url-display {
-		color: #a0aec0;
 	}
 
 	.download-options {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.75rem;
+		margin-top: 20px;
 	}
 
 	.download-label {
-		font-weight: 500;
+		display: block;
+		text-align: center;
+		margin-bottom: 10px;
+		color: var(--text-secondary);
 		font-size: 0.9rem;
 	}
 
 	.download-buttons {
 		display: flex;
-		gap: 0.5rem;
-		flex-wrap: wrap;
+		gap: 10px;
 		justify-content: center;
 	}
 
 	.btn {
-		padding: 0.5rem 1rem;
+		width: auto;
+		padding: 10px 20px;
 		border: none;
-		border-radius: 4px;
+		border-radius: 10px;
+		font-size: 1rem;
+		font-weight: 600;
 		cursor: pointer;
-		font-size: 0.9rem;
-		transition: background-color 0.2s;
+		transition:
+			transform 0.2s,
+			box-shadow 0.2s,
+			background-color 0.3s,
+			color 0.3s;
 	}
 
 	.btn-secondary {
-		background: #6c757d;
-		color: white;
+		background: var(--btn-secondary-bg);
+		color: var(--btn-secondary-text);
 	}
 
 	.btn-secondary:hover {
-		background: #5a6268;
+		background: var(--btn-secondary-hover);
 	}
 </style>

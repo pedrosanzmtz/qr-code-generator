@@ -21,28 +21,33 @@
 
 <style>
 	.option-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		flex: 1;
 	}
 
 	label {
-		font-weight: 500;
-		font-size: 0.9rem;
+		display: block;
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+		margin-bottom: 6px;
 	}
 
 	select {
-		padding: 0.5rem;
-		border: 1px solid #ddd;
-		border-radius: 4px;
-		font-size: 1rem;
-		background: white;
+		width: 100%;
+		padding: 10px 12px;
+		border: 2px solid var(--border-color);
+		border-radius: 8px;
+		font-size: 0.9rem;
+		background: var(--input-bg);
+		color: var(--input-text);
 		cursor: pointer;
+		transition:
+			border-color 0.2s,
+			background-color 0.3s,
+			color 0.3s;
 	}
 
-	:global(.dark-mode) select {
-		background: #2d3748;
-		border-color: #4a5568;
-		color: #e2e8f0;
+	select:focus {
+		outline: none;
+		border-color: #0f3460;
 	}
 </style>
