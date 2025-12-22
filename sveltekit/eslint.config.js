@@ -40,6 +40,13 @@ export default [
 			parserOptions: {
 				parser: tsParser
 			}
+		},
+		plugins: {
+			'@typescript-eslint': ts
+		},
+		rules: {
+			'no-unused-vars': 'off',
+			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
 		}
 	},
 	{
