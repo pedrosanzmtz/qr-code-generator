@@ -1,44 +1,73 @@
 <script lang="ts">
 	import { t } from '$lib/stores/language';
+	import { qrTemplate } from '$lib/stores/qrTemplate';
+	import type { TemplateType } from '$lib/stores/qrTemplate';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import LanguageToggle from '$lib/components/LanguageToggle.svelte';
+	import TemplateSelector from '$lib/components/TemplateSelector.svelte';
 	import URLInput from '$lib/components/URLInput.svelte';
+	import WiFiForm from '$lib/components/WiFiForm.svelte';
+	import VCardForm from '$lib/components/VCardForm.svelte';
+	import EmailForm from '$lib/components/EmailForm.svelte';
+	import SMSForm from '$lib/components/SMSForm.svelte';
+	import PhoneForm from '$lib/components/PhoneForm.svelte';
+	import TextForm from '$lib/components/TextForm.svelte';
 	import GenerateButton from '$lib/components/GenerateButton.svelte';
 	import QRDisplay from '$lib/components/QRDisplay.svelte';
 	import SizeSelector from '$lib/components/SizeSelector.svelte';
 	import ColorSelector from '$lib/components/ColorSelector.svelte';
 	import LogoUploader from '$lib/components/LogoUploader.svelte';
+	import {
+		encodeWiFi,
+		encodeVCard,
+		encodeEmail,
+		encodeSMS,
+		encodePhone,
+		encodeText,
+		encodeURL
+	} from '$lib/utils/templateEncoder';
 
 	let url = $state('');
 	let errorMessage = $state('');
-	let generatedUrl = $state('');
+	let generatedData = $state('');
 	let showQR = $state(false);
 
-	function isValidURL(string: string): boolean {
-		try {
-			new URL(string);
-			return true;
-		} catch {
-			return false;
-		}
-	}
-
 	function handleGenerate() {
-		const trimmedUrl = url.trim();
+		try {
+			errorMessage = '';
+			const state = $state.snapshot($qrTemplate);
 
-		if (!trimmedUrl) {
-			errorMessage = $t.errorEmpty;
-			return;
+			let data = '';
+			switch (state.selectedTemplate) {
+				case 'url':
+					data = encodeURL({ url });
+					break;
+				case 'wifi':
+					data = encodeWiFi(state.wifi);
+					break;
+				case 'vcard':
+					data = encodeVCard(state.vcard);
+					break;
+				case 'email':
+					data = encodeEmail(state.email);
+					break;
+				case 'sms':
+					data = encodeSMS(state.sms);
+					break;
+				case 'phone':
+					data = encodePhone(state.phone);
+					break;
+				case 'text':
+					data = encodeText(state.text);
+					break;
+			}
+
+			generatedData = data;
+			showQR = true;
+		} catch (error) {
+			errorMessage = error instanceof Error ? error.message : 'An error occurred';
+			showQR = false;
 		}
-
-		if (!isValidURL(trimmedUrl)) {
-			errorMessage = $t.errorInvalid;
-			return;
-		}
-
-		errorMessage = '';
-		generatedUrl = trimmedUrl;
-		showQR = true;
 	}
 
 	function handleUrlChange(newUrl: string) {
@@ -47,6 +76,12 @@
 
 	function handleErrorClear() {
 		errorMessage = '';
+	}
+
+	function handleTemplateChange(template: TemplateType) {
+		qrTemplate.setTemplate(template);
+		errorMessage = '';
+		showQR = false;
 	}
 </script>
 
@@ -65,13 +100,36 @@
 	</h1>
 	<p class="subtitle">{$t.subtitle}</p>
 
-	<URLInput
-		{url}
-		{errorMessage}
-		onUrlChange={handleUrlChange}
-		onErrorClear={handleErrorClear}
-		onGenerate={handleGenerate}
+	<TemplateSelector
+		selectedTemplate={$qrTemplate.selectedTemplate}
+		onTemplateChange={handleTemplateChange}
 	/>
+
+	{#if $qrTemplate.selectedTemplate === 'url'}
+		<URLInput
+			{url}
+			{errorMessage}
+			onUrlChange={handleUrlChange}
+			onErrorClear={handleErrorClear}
+			onGenerate={handleGenerate}
+		/>
+	{:else if $qrTemplate.selectedTemplate === 'wifi'}
+		<WiFiForm data={$qrTemplate.wifi} onUpdate={qrTemplate.updateWiFi} />
+	{:else if $qrTemplate.selectedTemplate === 'vcard'}
+		<VCardForm data={$qrTemplate.vcard} onUpdate={qrTemplate.updateVCard} />
+	{:else if $qrTemplate.selectedTemplate === 'email'}
+		<EmailForm data={$qrTemplate.email} onUpdate={qrTemplate.updateEmail} />
+	{:else if $qrTemplate.selectedTemplate === 'sms'}
+		<SMSForm data={$qrTemplate.sms} onUpdate={qrTemplate.updateSMS} />
+	{:else if $qrTemplate.selectedTemplate === 'phone'}
+		<PhoneForm data={$qrTemplate.phone} onUpdate={qrTemplate.updatePhone} />
+	{:else if $qrTemplate.selectedTemplate === 'text'}
+		<TextForm data={$qrTemplate.text} onUpdate={qrTemplate.updateText} />
+	{/if}
+
+	{#if errorMessage}
+		<p class="error-message">{errorMessage}</p>
+	{/if}
 
 	<div class="customization-section">
 		<h3>{$t.customizeTitle}</h3>
@@ -84,7 +142,7 @@
 
 	<GenerateButton onGenerate={handleGenerate} />
 
-	<QRDisplay url={generatedUrl} visible={showQR} />
+	<QRDisplay url={generatedData} visible={showQR} />
 </div>
 
 <footer class="footer">
@@ -103,3 +161,16 @@
 		</svg>
 	</a>
 </footer>
+
+<style>
+	.error-message {
+		color: var(--error-color);
+		font-size: 0.9rem;
+		margin: 1rem 0;
+		padding: 0.75rem;
+		background-color: rgba(231, 76, 60, 0.1);
+		border: 1px solid var(--error-color);
+		border-radius: 8px;
+		text-align: center;
+	}
+</style>

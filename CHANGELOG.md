@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **QR Code Templates**: Added support for multiple QR code types beyond URLs
+  - WiFi: Generate QR codes for network credentials (SSID, password, security type, hidden network)
+  - vCard: Create contact cards with name, company, phone, email, website, and address
+  - Email: Pre-filled email with recipient, subject, and body
+  - SMS: Text message with phone number and message
+  - Phone: Direct dial phone numbers
+  - Text: Plain text QR codes for any content
+  - Template selector with intuitive icons for each type
+  - Dynamic form fields based on selected template
+  - Data encoding for each template format (WiFi, vCard 3.0, mailto, sms, tel)
+  - Full i18n support for all template forms (English and Spanish)
+
 ### Added (SvelteKit Migration)
 - **PWA**: Configured Progressive Web App support
   - Installed @vite-pwa/sveltekit for service worker generation
